@@ -1,0 +1,222 @@
+__build_info:
+  rime_version: 1.11.2
+  timestamps:
+    092wb.custom: 0
+    092wb.schema: 1733630845
+    default: 1728048116
+    default.custom: 1733580868
+    key_bindings: 1728048115
+    key_bindings.custom: 0
+    punctuation: 1728048116
+    punctuation.custom: 0
+ascii_composer:
+  switch_key:
+    Caps_Lock: clear
+    Control_L: noop
+    Control_R: noop
+    Shift_L: commit_code
+    Shift_R: commit_text
+engine:
+  filters:
+    - simplifier
+    - uniquifier
+    - "simplifier@pinyin"
+    - "simplifier@splits"
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+    - "lua_translator@time_translator"
+    - "history_translator@history"
+history:
+  initial_quality: 0
+  input: z
+  size: 3
+key_binder:
+  bindings:
+    - {accept: semicolon, send: 2, when: has_menu}
+    - {accept: apostrophe, send: 3, when: has_menu}
+    - {accept: z, send: 3, when: has_menu}
+    - {accept: bracketleft, send: 4, when: has_menu}
+    - {accept: bracketright, send: 5, when: has_menu}
+  paging_with_comma_period: false
+menu:
+  alternative_select_labels:
+    - "㊀"
+    - "㊁"
+    - "㊂"
+    - "㊃"
+    - "㊄"
+    - "㊅"
+    - "㊆"
+    - "㊇"
+    - "㊈"
+    - "㊉"
+  page_size: 10
+pinyin:
+  comment_format:
+    - "xform/&nbsp;/ /"
+  opencc_config: pinyin.json
+  option_name: pinyin
+  show_in_comment: true
+  tips: char
+punctuator:
+  full_shape:
+    " ": {commit: "　"}
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": ["＃", "⌘"]
+    "$": ["￥", "$", "€", "£", "¥", "¢", "¤"]
+    "%": ["％", "°", "℃"]
+    "&": "＆"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["＊", "·", "・", "×", "※", "❂"]
+    "+": "＋"
+    ",": {commit: "，"}
+    "-": "－"
+    .: {commit: "。"}
+    "/": ["／", "÷"]
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": ["《", "〈", "«", "‹"]
+    "=": "＝"
+    ">": ["》", "〉", "»", "›"]
+    "?": {commit: "？"}
+    "@": ["＠", "☯"]
+    "[": ["「", "【", "〔", "［"]
+    "\\": ["、", "＼"]
+    "]": ["」", "】", "〕", "］"]
+    "^": {commit: "……"}
+    _: "——"
+    "`": "｀"
+    "{": ["『", "〖", "｛"]
+    "|": ["·", "｜", "§", "¦"]
+    "}": ["』", "〗", "｝"]
+    "~": "～"
+  half_shape:
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": "#"
+    "$": ["￥", "$", "€", "£", "¥", "¢", "¤"]
+    "%": ["%", "％", "°", "℃"]
+    "&": "&"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["*", "＊", "·", "・", "×", "※", "❂"]
+    "+": "+"
+    ",": {commit: "，"}
+    "-": "-"
+    .: {commit: "。"}
+    "/": ["、", "/", "／", "÷"]
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": ["《", "〈", "«", "‹"]
+    "=": "="
+    ">": ["》", "〉", "»", "›"]
+    "?": {commit: "？"}
+    "@": "@"
+    "[": ["「", "【", "〔", "［"]
+    "\\": ["、", "\\", "＼"]
+    "]": ["」", "】", "〕", "］"]
+    "^": {commit: "……"}
+    _: "——"
+    "`": "`"
+    "{": ["『", "〖", "｛"]
+    "|": ["·", "|", "｜", "§", "¦"]
+    "}": ["』", "〗", "｝"]
+    "~": ["~", "～"]
+  import_preset: default
+recognizer:
+  import_preset: default
+  patterns:
+    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    reverse_lookup: "^zz[a-z]*'?$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
+reverse_lookup:
+  dictionary: pinyin_simp
+  preedit_format:
+    - "xform/([nl])v/$1ü/"
+    - "xform/([nl])ue/$1üe/"
+    - "xform/([jqxy])v/$1u/"
+  prefix: zz
+  suffix: "'"
+  tips: "〔拼音〕"
+schema:
+  author:
+    - "行走的风景"
+  dependencies:
+    - pinyin_simp
+  description: |
+    零九二五笔（修订版）
+
+  name: "零九二五笔"
+  schema_id: 092wb
+  version: 2024.10.22
+simplifier:
+  opencc_config: s2t.json
+  option_name: zh_trad
+speller:
+  auto_clear: max_length
+  auto_select: true
+  max_code_length: 4
+splits:
+  comment_format:
+    - "xform/&nbsp;/ /"
+  opencc_config: 092_splits.json
+  option_name: splits
+  show_in_comment: true
+  tags:
+    - abc
+  tips: char
+style:
+  comment_font_face: 092etymon
+  display_tray_icon: false
+  horizontal: true
+  inline_preedit: false
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: ["中文", "英文"]
+  - name: zh_trad
+    reset: 0
+    states: ["简体", "繁体"]
+  - name: extended_charset
+    states: ["常用", "扩展"]
+  - name: ascii_punct
+    states: ["。，", "．，"]
+  - name: full_shape
+    states: ["半角", "全角"]
+  - name: splits
+    reset: 0
+    states: ["无拆", "有拆"]
+  - name: pinyin
+    reset: 0
+    states: ["字", "zì"]
+translator:
+  dictionary: 092wb
+  enable_charset_filter: true
+  enable_completion: false
+  enable_encoder: true
+  enable_sentence: false
+  enable_user_dict: false
+  encode_commit_history: true
+  max_phrase_length: 4

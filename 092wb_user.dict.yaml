@@ -1,0 +1,20 @@
+---
+name: 092wb_user
+version: "2024.10.22"
+sort: original
+use_preset_vocabulary: false
+columns:
+  - text
+  - code
+#encoder:
+#  rules:
+#    - length_equal: 2
+#      formula: "AaAbBaBb"
+#    - length_equal: 3
+#      formula: "AaBaCaCb"
+#    - length_in_range: [4, 10]
+#      formula: "AaBaCaZa"
+...
+lemonix_elaina@outlook.com	zntg
+57688316@qq.com	zntg
+lemonixelaina@gmail.com	zntg

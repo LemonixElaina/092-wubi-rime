@@ -1,0 +1,151 @@
+schema:
+  schema_id: 092wb
+  author:
+    - "行走的风景"
+  dependencies:
+    - pinyin_simp
+  description: |
+    零九二五笔（修订版）
+  name: "零九二五笔"
+  version: "2024.10.22"
+
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 英文 ]
+  - name: zh_trad
+    reset: 0
+    states: [ 简体, 繁体 ]
+  - name: extended_charset
+    states: [ 常用, 扩展 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: splits
+    reset: 0 
+    states: [ 无拆, 有拆 ]
+  - name: pinyin  # 拼音滤镜
+    reset: 0
+    states: [ 字, zì ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+    - lua_translator@time_translator
+    - history_translator@history
+  filters:
+    - simplifier
+    - uniquifier
+    - simplifier@pinyin # 拼音滤镜
+    - simplifier@splits # 拆分滤镜
+
+
+speller:
+  auto_clear: max_length
+  auto_select: true
+  max_code_length: 4
+  # auto_select_pattern: ^;\w+|^\w{4}$
+
+
+translator:
+  dictionary: 092wb
+  enable_charset_filter: true
+  enable_completion: false
+  enable_encoder: true
+  enable_sentence: false
+  encode_commit_history: true
+  max_phrase_length: 4
+  enable_user_dict: false
+
+reverse_lookup:
+  dictionary: pinyin_simp
+  preedit_format:
+    - "xform/([nl])v/$1ü/"
+    - "xform/([nl])ue/$1üe/"
+    - "xform/([jqxy])v/$1u/"
+  prefix: "zz"
+  suffix: "'"
+  tips: "〔拼音〕"
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  paging_with_comma_period: false # 启用标顶
+  bindings:
+    - { accept: semicolon, send: 2, when: has_menu }
+    - { accept: apostrophe, send: 3, when: has_menu }
+    - { accept: z, send: 3, when: has_menu }
+    - { accept: bracketleft, send: 4, when: has_menu }
+    - { accept: bracketright, send: 5, when: has_menu }
+
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "^zz[a-z]*'?$"
+#    punct: '^/([0-9]0?|[A-Za-z]+)$'
+
+ascii_composer:
+  switch_key:
+    Caps_Lock: clear
+    Control_L: noop
+    Control_R: noop
+    Shift_L: commit_code
+    Shift_R: commit_text
+
+simplifier:
+  opencc_config: s2t.json
+  option_name: zh_trad
+
+history:
+  input: "z"
+  size: 3
+  initial_quality: 0
+
+pinyin:
+  opencc_config: pinyin.json
+  option_name: pinyin
+  show_in_comment: true # 作为注解在后面显示
+  comment_format:
+    - 'xform/&nbsp;/ /'
+  tips: char
+
+splits:
+  opencc_config: 092_splits.json
+  option_name: splits
+  show_in_comment: true 
+  comment_format:     
+    - "xform/&nbsp;/ /"
+  tags:     
+    - abc
+  tips: char
+
+menu:
+  page_size: 10
+  alternative_select_labels: [ ㊀, ㊁, ㊂, ㊃, ㊄, ㊅, ㊆, ㊇, ㊈, ㊉ ]
+
+style:
+  horizontal: true # 横排
+  inline_preedit: false # 内嵌编码
+  display_tray_icon: false
+  comment_font_face: "092etymon"
