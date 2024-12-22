@@ -1,4 +1,4 @@
-/build
-/luna_pinyin.userdb
-/terra_pinyin.userdb
+build/
+luna_pinyin.userdb/
+terra_pinyin.userdb/
 installation.yaml
