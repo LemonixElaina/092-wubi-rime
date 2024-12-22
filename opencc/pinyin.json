@@ -7,13 +7,15 @@
       "file": "pinyin_phrases.txt"
     }
   },
+  
   "conversion_chain": [{
     "dict": {
       "type": "group",
       "dicts": [{
         "type": "text",
         "file": "pinyin_phrases.txt"
-      }, {
+      },
+      {
         "type": "text",
         "file": "pinyin_characters.txt"
       }]

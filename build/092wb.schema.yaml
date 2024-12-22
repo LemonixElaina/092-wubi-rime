@@ -2,10 +2,10 @@ __build_info:
   rime_version: 1.11.2
   timestamps:
     092wb.custom: 0
-    092wb.schema: 1733630845
+    092wb.schema: 1734863381
     default: 1728048116
     default.custom: 1733580868
-    key_bindings: 1728048115
+    key_bindings: 1728048116
     key_bindings.custom: 0
     punctuation: 1728048116
     punctuation.custom: 0
@@ -28,6 +28,7 @@ engine:
     - key_binder
     - speller
     - punctuator
+    - "lua_processor@rapid_processor"
     - selector
     - navigator
     - express_editor
@@ -53,20 +54,20 @@ key_binder:
     - {accept: apostrophe, send: 3, when: has_menu}
     - {accept: z, send: 3, when: has_menu}
     - {accept: bracketleft, send: 4, when: has_menu}
-    - {accept: bracketright, send: 5, when: has_menu}
+    - {accept: slash, send: 5, when: has_menu}
   paging_with_comma_period: false
 menu:
   alternative_select_labels:
-    - "㊀"
-    - "㊁"
-    - "㊂"
-    - "㊃"
-    - "㊄"
-    - "㊅"
-    - "㊆"
-    - "㊇"
-    - "㊈"
-    - "㊉"
+    - "␣"
+    - ";"
+    - z
+    - "["
+    - "/"
+    - "⁶"
+    - "⁷"
+    - "⁸"
+    - "⁹"
+    - "⁰"
   page_size: 10
 pinyin:
   comment_format:
@@ -125,7 +126,7 @@ punctuator:
     ",": {commit: "，"}
     "-": "-"
     .: {commit: "。"}
-    "/": ["、", "/", "／", "÷"]
+    "/": "/"
     ":": {commit: "："}
     ";": {commit: "；"}
     "<": ["《", "〈", "«", "‹"]
@@ -133,15 +134,15 @@ punctuator:
     ">": ["》", "〉", "»", "›"]
     "?": {commit: "？"}
     "@": "@"
-    "[": ["「", "【", "〔", "［"]
-    "\\": ["、", "\\", "＼"]
-    "]": ["」", "】", "〕", "］"]
+    "[": "【"
+    "\\": "、"
+    "]": "】"
     "^": {commit: "……"}
     _: "——"
-    "`": "`"
-    "{": ["『", "〖", "｛"]
+    "`": "·"
+    "{": "〖"
     "|": ["·", "|", "｜", "§", "¦"]
-    "}": ["』", "〗", "｝"]
+    "}": "〗"
     "~": ["~", "～"]
   import_preset: default
 recognizer:
@@ -170,13 +171,14 @@ schema:
 
   name: "零九二五笔"
   schema_id: 092wb
-  version: 2024.10.22
+  version: "2024-12-22"
 simplifier:
   opencc_config: s2t.json
   option_name: zh_trad
 speller:
   auto_clear: max_length
   auto_select: true
+  auto_select_pattern: "^;.$|^[a-y]{4}$"
   max_code_length: 4
 splits:
   comment_format:
@@ -194,10 +196,8 @@ style:
   inline_preedit: false
 switches:
   - name: ascii_mode
-    reset: 0
     states: ["中文", "英文"]
   - name: zh_trad
-    reset: 0
     states: ["简体", "繁体"]
   - name: extended_charset
     states: ["常用", "扩展"]
@@ -206,10 +206,8 @@ switches:
   - name: full_shape
     states: ["半角", "全角"]
   - name: splits
-    reset: 0
     states: ["无拆", "有拆"]
   - name: pinyin
-    reset: 0
     states: ["字", "zì"]
 translator:
   dictionary: 092wb

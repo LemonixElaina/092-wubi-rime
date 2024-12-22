@@ -1,15 +1,15 @@
 __build_info:
   rime_version: 1.11.2
   timestamps:
-    default: 1728048115
+    default: 1728048116
     default.custom: 1733580868
     key_bindings: 1728048116
     key_bindings.custom: 0
     pinyin_simp.custom: 0
-    pinyin_simp.schema: 1614960030
+    pinyin_simp.schema: 1720968326
     punctuation: 1728048116
     punctuation.custom: 0
-    symbols: 1728048116
+    symbols: 1728048115
     symbols.custom: 0
 engine:
   processors:
@@ -364,9 +364,13 @@ schema:
 
   name: "袖珍简化字拼音"
   schema_id: pinyin_simp
-  version: 0.8
+  version: 0.9
 speller:
   algebra:
+    - "erase/^hm$/"
+    - "erase/^m$/"
+    - "erase/^n$/"
+    - "erase/^ng$/"
     - "abbrev/^([a-z]).+$/$1/"
     - "abbrev/^([zcs]h).+$/$1/"
     - "derive/^([nl])ue$/$1ve/"

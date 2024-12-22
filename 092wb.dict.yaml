@@ -1,21 +1,15 @@
+# 零九二五笔主码表
+
 ---
 name: 092wb
-version: "2024.10.22"
+version: "2024-10-22"
 sort: original
 use_preset_vocabulary: false
 columns:
   - text
   - code
-#encoder:
-#  rules:
-#    - length_equal: 2
-#      formula: "AaAbBaBb"
-#    - length_equal: 3
-#      formula: "AaBaCaCb"
-#    - length_in_range: [4, 10]
-#      formula: "AaBaCaZa"
-
 import_tables:
+  - 092wb_system
   - 092wb_user
 ...
 从	a

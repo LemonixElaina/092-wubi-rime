@@ -1,3 +1,5 @@
+# 零九二五笔
+
 schema:
   schema_id: 092wb
   author:
@@ -7,15 +9,13 @@ schema:
   description: |
     零九二五笔（修订版）
   name: "零九二五笔"
-  version: "2024.10.22"
+  version: "2024-12-22"
 
 
 switches:
   - name: ascii_mode
-    reset: 0
     states: [ 中文, 英文 ]
   - name: zh_trad
-    reset: 0
     states: [ 简体, 繁体 ]
   - name: extended_charset
     states: [ 常用, 扩展 ]
@@ -24,10 +24,8 @@ switches:
   - name: full_shape
     states: [ 半角, 全角 ]
   - name: splits
-    reset: 0 
     states: [ 无拆, 有拆 ]
   - name: pinyin  # 拼音滤镜
-    reset: 0
     states: [ 字, zì ]
 
 engine:
@@ -37,6 +35,7 @@ engine:
     - key_binder
     - speller
     - punctuator
+    - lua_processor@rapid_processor
     - selector
     - navigator
     - express_editor
@@ -63,7 +62,7 @@ speller:
   auto_clear: max_length
   auto_select: true
   max_code_length: 4
-  # auto_select_pattern: ^;\w+|^\w{4}$
+  auto_select_pattern: ^;.$|^[a-y]{4}$
 
 
 translator:
@@ -86,8 +85,18 @@ reverse_lookup:
   suffix: "'"
   tips: "〔拼音〕"
 
+
 punctuator:
   import_preset: default
+  half_shape:
+    "/": "/"
+    "`": "·"
+    "[": "【"
+    "]": "】"
+    "{": "〖"
+    "}": "〗"
+    "\\": "、"
+
 
 key_binder:
   paging_with_comma_period: false # 启用标顶
@@ -96,14 +105,15 @@ key_binder:
     - { accept: apostrophe, send: 3, when: has_menu }
     - { accept: z, send: 3, when: has_menu }
     - { accept: bracketleft, send: 4, when: has_menu }
-    - { accept: bracketright, send: 5, when: has_menu }
+    - { accept: slash, send: 5, when: has_menu }
+
 
 
 recognizer:
   import_preset: default
   patterns:
     reverse_lookup: "^zz[a-z]*'?$"
-#    punct: '^/([0-9]0?|[A-Za-z]+)$'
+
 
 ascii_composer:
   switch_key:
@@ -113,14 +123,17 @@ ascii_composer:
     Shift_L: commit_code
     Shift_R: commit_text
 
+
 simplifier:
   opencc_config: s2t.json
   option_name: zh_trad
+
 
 history:
   input: "z"
   size: 3
   initial_quality: 0
+
 
 pinyin:
   opencc_config: pinyin.json
@@ -130,19 +143,31 @@ pinyin:
     - 'xform/&nbsp;/ /'
   tips: char
 
+
 splits:
   opencc_config: 092_splits.json
   option_name: splits
   show_in_comment: true 
   comment_format:     
     - "xform/&nbsp;/ /"
-  tags:     
-    - abc
+  tags: [abc]
   tips: char
+
 
 menu:
   page_size: 10
-  alternative_select_labels: [ ㊀, ㊁, ㊂, ㊃, ㊄, ㊅, ㊆, ㊇, ㊈, ㊉ ]
+  alternative_select_labels:
+    - "␣"
+    - ";"
+    - "z"
+    - "["
+    - "/"
+    - "⁶"
+    - "⁷"
+    - "⁸"
+    - "⁹"
+    - "⁰"
+
 
 style:
   horizontal: true # 横排
